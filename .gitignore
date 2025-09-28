@@ -7,10 +7,7 @@ override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
-*.pem
-*.key
-*.json   
-.vscode/
+ .vscode/
 .DS_Store
 Thumbs.db
 __pycache__/
