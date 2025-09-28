@@ -1,0 +1,17 @@
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+*.pem
+*.key
+*.json   
+.vscode/
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
