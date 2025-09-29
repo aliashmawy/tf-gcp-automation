@@ -12,6 +12,21 @@ module "vpc" {
   ip_cidr_range= "10.0.0.0/24"
   region       = "us-central1"
 }
+module "firewall" {
+  source        = "./modules/firewall"
+  firewall_name = "allow-sql"
+  network       = module.vpc.vpc_self_link
+  allowed_ports = ["5432"]
+  target_tags   = ["sql-server"]
+}
+
+output "sql_firewall_id" {
+  value = module.firewall.firewall_id
+}
+
+output "sql_firewall_self_link" {
+  value = module.firewall.firewall_self_link
+}
 
 provider "google" {
   project = "besho-project"
