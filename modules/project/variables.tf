@@ -1,9 +1,14 @@
 variable "project_name" {
   description = "name of the project"
-  default = "terraform-automation"
+  type = string
 }
 
 variable "project_id" {
   description = "id of the project"
-  default = "terraform-automation-by-ali-and-besho"
+  type = string
+}
+
+variable "enabled_apis" {
+  description = "List of APIs to enable in the project"
+  type        = list(string)
 }
