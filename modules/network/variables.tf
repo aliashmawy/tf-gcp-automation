@@ -13,3 +13,6 @@ variable "project_id" {
 variable "region" {
   type = string
 }
+variable "ip_cidr_range" {
+  type = string
+}
