@@ -1,3 +1,8 @@
+terraform {
+  backend "gcs" {
+    bucket = "terraform-automation-remote-state"
+  }
+}
 provider "google" {
   region = var.region
 }
