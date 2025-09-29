@@ -50,6 +50,11 @@ module "cloudrun_sa" {
     "roles/vpcaccess.user"
   ]
 }
+module "monitoring" {
+  source      = "./modules/monitoring"
+  project_id  = module.project.project_id
+  logs_bucket = "intern-logs-bucket"
+}
 
 
 provider "google" {
