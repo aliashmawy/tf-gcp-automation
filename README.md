@@ -1,5 +1,14 @@
 ## tf-gcp-automation
 
+This repository provisions a complete, production-ready Google Cloud Platform (GCP) environment using Terraform. It automates:
+
+- Project creation and API enablement
+- VPC, subnetwork, and firewall rules
+- Cloud SQL for PostgreSQL (with Secret Manager for credentials)
+- Cloud Run service deployment (container image, port, service account, VPC connector)
+- External HTTPS Load Balancer pointing to Cloud Run
+- Monitoring alerting policy (email notifications)
+
 ### Project structure
 ```text
 tf-gcp-automation/
@@ -20,15 +29,6 @@ tf-gcp-automation/
   - terraform.tfvars
   - variables.tf
 ```
-
-This repository provisions a complete, production-ready Google Cloud Platform (GCP) environment using Terraform. It automates:
-
-- Project creation and API enablement
-- VPC, subnetwork, and firewall rules
-- Cloud SQL for PostgreSQL (with Secret Manager for credentials)
-- Cloud Run service deployment (container image, port, service account, VPC connector)
-- External HTTPS Load Balancer pointing to Cloud Run
-- Monitoring alerting policy (email notifications)
 
 ### How the structure works
 The root `main.tf` wires together modular Terraform components under `modules/`. You configure a handful of input variables (see `variables.tf` or your `terraform.tfvars`), and apply once to create the full stack. Remote state is stored in a GCS bucket.
