@@ -10,7 +10,9 @@ enabled_apis = [
   "run.googleapis.com",
   "vpcaccess.googleapis.com",
   "iam.googleapis.com",
-  "servicenetworking.googleapis.com"
+  "servicenetworking.googleapis.com",
+  "monitoring.googleapis.com",
+  "logging.googleapis.com"
 ]
 db_version     = "POSTGRES_15"
 db_tier        = "db-f1-micro"
@@ -19,7 +21,8 @@ image_name     = "aliashmawy/teamavail-app"
 container_port = 3000
 container_name = "teamavail-app"
 roles = [
-    "roles/cloudsql.client",
-    "roles/secretmanager.secretAccessor",
-    "roles/vpcaccess.user"
-  ]
+  "roles/cloudsql.client",
+  "roles/secretmanager.secretAccessor",
+  "roles/vpcaccess.user"
+]
+alert_email = "aliashmawy595@gmail.com"

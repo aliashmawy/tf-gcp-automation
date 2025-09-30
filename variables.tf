@@ -41,7 +41,7 @@ variable "image_name" {
 
 variable "container_name" {
   description = "name of container"
-  type = string
+  type        = string
 }
 
 variable "container_port" {
@@ -60,5 +60,10 @@ variable "ip_cidr_range_connector" {
 
 variable "roles" {
   description = "roles for sa"
-  type = list(string)
+  type        = list(string)
+}
+
+variable "alert_email" {
+  description = "alert email"
+  type        = string
 }

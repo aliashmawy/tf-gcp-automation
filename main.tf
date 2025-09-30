@@ -83,5 +83,21 @@ module "iam" {
   project_id         = var.project_id
   service_account_id = "cloudrun-sa"
   display_name       = "Cloud Run Service Account"
-  roles = var.roles
+  roles              = var.roles
+}
+
+module "load-balancer" {
+  source                 = "./modules/load-balancing"
+  project_name           = var.project_name
+  region                 = var.region
+  cloud_run_service_name = module.cloudrun.cloud_run_service_name
+  project_id             = var.project_id
+}
+
+module "monitoring" {
+  source                 = "./modules/monitoring"
+  project_id             = var.project_id
+  project_name           = var.project_name
+  cloud_run_service_name = module.cloudrun.cloud_run_service_name
+  alert_email            = var.alert_email
 }
