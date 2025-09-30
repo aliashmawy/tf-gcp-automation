@@ -51,11 +51,38 @@ module "cloudrun_sa" {
   ]
 }
 module "monitoring" {
-  source      = "./modules/monitoring"
-  project_id  = module.project.project_id
-  logs_bucket = "intern-logs-bucket"
+  source = "./modules/monitoring"
+
+  project_id          = module.project.project_id
+  logs_bucket_name    = "intern-logs-bucket-${module.project.project_id}"
+  alert_policy_name   = "CPU-High-Usage-${module.project.project_id}"
+  notification_email  = "intern-alerts@example.com"
+  cpu_threshold       = 80
+
+  depends_on = [
+    module.project,
+    module.vpc,
+    module.firewall,
+    module.iam
+  ]
 }
 
+# Outputs
+output "logs_bucket_name" {
+  value = module.monitoring.logs_bucket_name
+}
+
+output "sink_writer_identity" {
+  value = module.monitoring.sink_writer_identity
+}
+
+output "alert_policy_id" {
+  value = module.monitoring.alert_policy_id
+}
+
+output "notification_channel_id" {
+  value = module.monitoring.notification_channel_id
+}
 
 provider "google" {
   project = "dev-intern-poc"
