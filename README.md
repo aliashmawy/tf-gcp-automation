@@ -1,6 +1,6 @@
 ## tf-gcp-automation
 
-This repository provisions a complete, production-ready Google Cloud Platform (GCP) environment using Terraform. It automates:
+This repository provisions a complete, Google Cloud Platform (GCP) environment using Terraform. It automates:
 
 - Project creation and API enablement
 - VPC, subnetwork, and firewall rules
