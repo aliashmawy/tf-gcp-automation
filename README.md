@@ -149,8 +149,8 @@ resource "local_file" "default" {
 ### Use Socket connection between SQL and Cloud run instead of defining all SQL envs in code
 
 - This requires you edit in code to not expect all these envs
-- Just to expect a a socket path for the DB like this `/cloudsql/project:region:instance`
-- You make this work by adding annotation in cloud run tf code like this
+- Just expect a socket path for the DB like this `/cloudsql/project:region:instance`
+- You make this work by adding annotations in Cloud Run Terraform code like this
 
 ```hcl
 metadata {
