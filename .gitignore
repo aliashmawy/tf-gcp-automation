@@ -1,6 +1,14 @@
-#Terraform files
+*.tfstate
+*.tfstate.*
 .terraform/
 .terraform.lock.hcl
-terraform.tfstate
-terraform.tfstate.backup
-.terraform.tfstate.lock.info
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+ .vscode/
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
