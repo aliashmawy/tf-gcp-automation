@@ -1,78 +1,39 @@
-# Enable Monitoring & Logging APIs
-resource "google_project_service" "monitoring" {
-  project = var.project_id
-  service = "monitoring.googleapis.com"
-}
-
-resource "google_project_service" "logging" {
-  project = var.project_id
-  service = "logging.googleapis.com"
-}
-
-# Create logs bucket
-resource "google_storage_bucket" "logs_bucket" {
-  name     = var.logs_bucket_name
-  location = "US"
-}
-
-# Logging sink to bucket
-resource "google_logging_project_sink" "bucket_sink" {
-  name                    = "logs-to-bucket"
-  project                 = var.project_id
-  destination             = "storage.googleapis.com/${google_storage_bucket.logs_bucket.name}"
-  unique_writer_identity  = true
-}
-
-# Notification channel (Email)
-resource "google_monitoring_notification_channel" "email_channel" {
-  project = var.project_id
-  type    = "email"
-  display_name = "Alert Email Channel"
-  labels = {
-    email_address = var.notification_email
-  }
-}
-
-# CPU Alert Policy
-resource "google_monitoring_alert_policy" "cpu_alert" {
-  project = var.project_id
-  display_name = var.alert_policy_name
+resource "google_monitoring_alert_policy" "cloud_run_cpu" {
+  display_name = "${var.project_name}-cloud-run-high-cpu"
+  project      = var.project_id
   combiner     = "OR"
-
+  
   conditions {
-    display_name = "CPU Usage Condition"
+    display_name = "Cloud Run CPU utilization above 80%"
+    
     condition_threshold {
-      filter = "metric.type=\"compute.googleapis.com/instance/cpu/utilization\" resource.type=\"gce_instance\""
-      duration = "60s"
-      comparison = "COMPARISON_GT"
-      threshold_value = var.cpu_threshold
+      filter          = "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"${var.cloud_run_service_name}\" AND metric.type = \"run.googleapis.com/container/cpu/utilizations\""
+      duration        = "300s"
+      comparison      = "COMPARISON_GT"
+      threshold_value = 0.8
+      
       aggregations {
-        alignment_period = "60s"
-        per_series_aligner = "ALIGN_MEAN"
+        alignment_period   = "60s"
+        per_series_aligner = "ALIGN_DELTA"
+        cross_series_reducer = "REDUCE_MEAN"
+        group_by_fields      = ["resource.service_name"]
       }
     }
   }
 
-  notification_channels = [google_monitoring_notification_channel.email_channel.id]
-  enabled = true
-}
-output "logs_bucket_name" {
-  description = "Name of the logs bucket"
-  value       = google_storage_bucket.logs_bucket.name
-}
-
-output "sink_writer_identity" {
-  description = "Writer identity for the logging sink"
-  value       = google_logging_project_sink.bucket_sink.writer_identity
+  notification_channels = [google_monitoring_notification_channel.email.id]
+  
+  alert_strategy {
+    auto_close = "1800s"
+  }
 }
 
-output "alert_policy_id" {
-  description = "ID of the CPU alert policy"
-  value       = google_monitoring_alert_policy.cpu_alert.id
+resource "google_monitoring_notification_channel" "email" {
+  display_name = "${var.project_name}-email-notifications"
+  project      = var.project_id
+  type         = "email"
+  
+  labels = {
+    email_address = var.alert_email
+  }
 }
-
-output "notification_channel_id" {
-  description = "ID of the notification email channel"
-  value       = google_monitoring_notification_channel.email_channel.id
-}
-

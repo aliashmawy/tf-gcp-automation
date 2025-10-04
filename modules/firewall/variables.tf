@@ -1,16 +1,16 @@
 variable "firewall_name" {
-  type        = string
-  description = "Name of the firewall rule"
+  description = "name of the firewall to allow sql connection"
+  type = string
 }
 
-variable "network" {
-  type        = string
-  description = "VPC network self_link"
+variable "vpc_name" {
+  description = "name of vpc"
+  type = string
 }
 
 variable "allowed_ports" {
-  type        = list(string)
-  description = "Allowed TCP ports"
+  description = "ports to allow"
+  type = list(string)
 }
 
 variable "target_tags" {
@@ -22,4 +22,9 @@ variable "source_ranges" {
   type        = list(string)
   description = "Source IP ranges allowed"
   default     = ["0.0.0.0/0"] 
+}
+
+variable "project_id" {
+  description = "project name"
+  type = string
 }

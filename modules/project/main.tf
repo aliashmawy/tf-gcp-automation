@@ -1,15 +1,17 @@
-resource "google_project" "project" {
-  name       = var.project_id
+resource "google_project" "my_project" {
+  name       = var.project_name
   project_id = var.project_id
-  labels     = var.labels
-  billing_account = var.billing_account
+  billing_account = data.google_billing_account.acct.id
+}
+data "google_billing_account" "acct" {
+  display_name = "My Billing Account"
+  open         = true
 }
 
-resource "google_project_service" "enabled_apis" {
-  for_each = toset(var.apis)
-  project  = google_project.project.project_id
-  service  = each.value
-}
-output "project_id" {
-  value = google_project.project.project_id
+resource "google_project_service" "required" {
+  for_each = toset(var.enabled_apis)
+
+  project             = var.project_id
+  service             = each.value
+  disable_on_destroy  = false
 }
