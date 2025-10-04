@@ -1,0 +1,44 @@
+name: Auto Deploy GCP Project
+
+on:
+  push:
+    paths:
+      - 'configs/*.yaml'
+      - 'configs/*.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.5
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Run deploy.py for new YAMLs
+        run: |
+          for file in configs/*.yaml; do
+            echo "Processing $file..."
+            python scripts/deploy.py "$file"
+          done
