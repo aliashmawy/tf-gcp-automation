@@ -1,5 +1,7 @@
-project_id              = "terraform-automation-by-ali12"
-project_name            = "terraform-automation"
+project_id   = "tf-beshoy-proj"
+project_name = "beshoy-intern-proj"
+
+
 region                  = "us-central1"
 ip_cidr_range           = "10.10.0.0/24"
 ip_cidr_range_connector = "10.20.0.0/28"
