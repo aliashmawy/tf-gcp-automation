@@ -92,7 +92,7 @@ module "load-balancer" {
 
 module "monitoring" {
   source                 = "./modules/monitoring"
-  project_id             = var.project_id
+  project_id             = module.project.project_id
   project_name           = var.project_name
   cloud_run_service_name = module.cloudrun.cloud_run_service_name
   alert_email            = var.alert_email
