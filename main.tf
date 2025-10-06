@@ -82,7 +82,7 @@ module "iam" {
   project_id         = module.project.project_id
   service_account_id = var.service_account_id
   display_name       = var.display_name
-  roles              = var.roles
+  cloudrun_roles     = var.cloudrun_roles
 }
 
 module "load-balancer" {

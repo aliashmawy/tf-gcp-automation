@@ -55,7 +55,7 @@ modules:
     selected: true
     service_account_id: cloudrun-sa-prod
     display_name: Cloud Run Service Account
-    roles:
+    cloudrun_roles:
       - roles/cloudsql.client
       - roles/secretmanager.secretAccessor
       - roles/logging.logWriter

@@ -25,7 +25,7 @@ cloudrun_name  = "teamavail-service"
 image_name     = "aliashmawy/teamavail-app"
 container_port = 3000
 container_name = "teamavail-app"
-roles = [
+cloudrun_roles = [
   "roles/cloudsql.client",
   "roles/secretmanager.secretAccessor",
   "roles/vpcaccess.user"

@@ -1,7 +1,7 @@
 module.project.data.google_billing_account.acct: Reading...
 module.cloudrun.data.google_iam_policy.noauth: Reading...
 module.cloudrun.data.google_iam_policy.noauth: Read complete after 0s [id=3450855414]
-module.project.data.google_billing_account.acct: Read complete after 0s [id=0147B7-2560AC-CA1A2B]
+module.project.data.google_billing_account.acct: Read complete after 1s [id=0147B7-2560AC-CA1A2B]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -16,7 +16,7 @@ Terraform will perform the following actions:
       + id                         = (known after apply)
       + location                   = "us-central1"
       + name                       = "production-backend-api"
-      + project                    = "my-gcp-project-prod-12345"
+      + project                    = "my-gcp-project-prod-123450"
       + status                     = (known after apply)
 
       + metadata (known after apply)
@@ -34,7 +34,7 @@ Terraform will perform the following actions:
             }
           + spec {
               + container_concurrency = (known after apply)
-              + service_account_name  = "cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
+              + service_account_name  = "cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
               + serving_state         = (known after apply)
               + timeout_seconds       = (known after apply)
 
@@ -102,7 +102,7 @@ Terraform will perform the following actions:
                 ]
             }
         )
-      + project     = "my-gcp-project-prod-12345"
+      + project     = "my-gcp-project-prod-123450"
       + service     = "production-backend-api"
     }
 
@@ -116,7 +116,7 @@ Terraform will perform the following actions:
       + name               = "production-app-firewall"
       + network            = "production-app-network"
       + priority           = 1000
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + self_link          = (known after apply)
       + source_ranges      = [
           + "0.0.0.0/0",
@@ -138,8 +138,8 @@ Terraform will perform the following actions:
   + resource "google_project_iam_member" "sa_roles" {
       + etag    = (known after apply)
       + id      = (known after apply)
-      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
-      + project = "my-gcp-project-prod-12345"
+      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
+      + project = "my-gcp-project-prod-123450"
       + role    = "roles/cloudsql.client"
     }
 
@@ -147,8 +147,8 @@ Terraform will perform the following actions:
   + resource "google_project_iam_member" "sa_roles" {
       + etag    = (known after apply)
       + id      = (known after apply)
-      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
-      + project = "my-gcp-project-prod-12345"
+      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
+      + project = "my-gcp-project-prod-123450"
       + role    = "roles/logging.logWriter"
     }
 
@@ -156,8 +156,8 @@ Terraform will perform the following actions:
   + resource "google_project_iam_member" "sa_roles" {
       + etag    = (known after apply)
       + id      = (known after apply)
-      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
-      + project = "my-gcp-project-prod-12345"
+      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
+      + project = "my-gcp-project-prod-123450"
       + role    = "roles/monitoring.metricWriter"
     }
 
@@ -165,21 +165,21 @@ Terraform will perform the following actions:
   + resource "google_project_iam_member" "sa_roles" {
       + etag    = (known after apply)
       + id      = (known after apply)
-      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
-      + project = "my-gcp-project-prod-12345"
+      + member  = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
+      + project = "my-gcp-project-prod-123450"
       + role    = "roles/secretmanager.secretAccessor"
     }
 
-  # module.iam.google_service_account.this will be created
-  + resource "google_service_account" "this" {
+  # module.iam.google_service_account.cloudrun will be created
+  + resource "google_service_account" "cloudrun" {
       + account_id   = "cloudrun-sa-prod"
       + disabled     = false
       + display_name = "Cloud Run Service Account"
-      + email        = "cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
+      + email        = "cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
       + id           = (known after apply)
-      + member       = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com"
+      + member       = "serviceAccount:cloudrun-sa-prod@my-gcp-project-prod-123450.iam.gserviceaccount.com"
       + name         = (known after apply)
-      + project      = "my-gcp-project-prod-12345"
+      + project      = "my-gcp-project-prod-123450"
       + unique_id    = (known after apply)
     }
 
@@ -193,7 +193,7 @@ Terraform will perform the following actions:
       + load_balancing_scheme           = "EXTERNAL"
       + name                            = "production-backend-api-backend"
       + port_name                       = "http"
-      + project                         = "my-gcp-project-prod-12345"
+      + project                         = "my-gcp-project-prod-123450"
       + protocol                        = "HTTP"
       + self_link                       = (known after apply)
       + session_affinity                = (known after apply)
@@ -231,7 +231,7 @@ Terraform will perform the following actions:
       + label_fingerprint  = (known after apply)
       + name               = "production-backend-api-lb-ip"
       + prefix_length      = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + self_link          = (known after apply)
       + terraform_labels   = {
           + "goog-terraform-provisioned" = "true"
@@ -252,7 +252,7 @@ Terraform will perform the following actions:
       + network               = (known after apply)
       + network_tier          = (known after apply)
       + port_range            = "80"
-      + project               = "my-gcp-project-prod-12345"
+      + project               = "my-gcp-project-prod-123450"
       + psc_connection_id     = (known after apply)
       + psc_connection_status = (known after apply)
       + self_link             = (known after apply)
@@ -269,7 +269,7 @@ Terraform will perform the following actions:
       + name                  = "production-backend-api-neg"
       + network               = (known after apply)
       + network_endpoint_type = "SERVERLESS"
-      + project               = "my-gcp-project-prod-12345"
+      + project               = "my-gcp-project-prod-123450"
       + region                = "us-central1"
       + self_link             = (known after apply)
 
@@ -286,7 +286,7 @@ Terraform will perform the following actions:
       + fingerprint        = (known after apply)
       + id                 = (known after apply)
       + name               = "production-backend-api-lb-http-proxy"
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + proxy_bind         = (known after apply)
       + proxy_id           = (known after apply)
       + self_link          = (known after apply)
@@ -301,7 +301,7 @@ Terraform will perform the following actions:
       + id                 = (known after apply)
       + map_id             = (known after apply)
       + name               = "production-backend-api-lb-url-map"
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + self_link          = (known after apply)
     }
 
@@ -314,7 +314,7 @@ Terraform will perform the following actions:
       + id                    = (known after apply)
       + name                  = (known after apply)
       + notification_channels = (known after apply)
-      + project               = "my-gcp-project-prod-12345"
+      + project               = "my-gcp-project-prod-123450"
 
       + alert_strategy {
           + auto_close = "1800s"
@@ -352,7 +352,7 @@ Terraform will perform the following actions:
           + "email_address" = "aliashmawy595@gmail.com"
         }
       + name                = (known after apply)
-      + project             = "my-gcp-project-prod-12345"
+      + project             = "my-gcp-project-prod-123450"
       + type                = "email"
       + verification_status = (known after apply)
     }
@@ -372,7 +372,7 @@ Terraform will perform the following actions:
       + network_firewall_policy_enforcement_order = "AFTER_CLASSIC_FIREWALL"
       + network_id                                = (known after apply)
       + numeric_id                                = (known after apply)
-      + project                                   = "my-gcp-project-prod-12345"
+      + project                                   = "my-gcp-project-prod-123450"
       + routing_mode                              = (known after apply)
       + self_link                                 = (known after apply)
     }
@@ -392,7 +392,7 @@ Terraform will perform the following actions:
       + network                    = (known after apply)
       + private_ip_google_access   = (known after apply)
       + private_ipv6_google_access = (known after apply)
-      + project                    = "my-gcp-project-prod-12345"
+      + project                    = "my-gcp-project-prod-123450"
       + purpose                    = (known after apply)
       + region                     = "us-central1"
       + self_link                  = (known after apply)
@@ -414,7 +414,7 @@ Terraform will perform the following actions:
       + id                  = (known after apply)
       + name                = "production-app"
       + number              = (known after apply)
-      + project_id          = "my-gcp-project-prod-12345"
+      + project_id          = "my-gcp-project-prod-123450"
       + terraform_labels    = {
           + "goog-terraform-provisioned" = "true"
         }
@@ -424,7 +424,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "cloudresourcemanager.googleapis.com"
     }
 
@@ -432,7 +432,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "compute.googleapis.com"
     }
 
@@ -440,7 +440,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "logging.googleapis.com"
     }
 
@@ -448,7 +448,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "monitoring.googleapis.com"
     }
 
@@ -456,7 +456,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "run.googleapis.com"
     }
 
@@ -464,7 +464,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "secretmanager.googleapis.com"
     }
 
@@ -472,7 +472,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "servicenetworking.googleapis.com"
     }
 
@@ -480,7 +480,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "sqladmin.googleapis.com"
     }
 
@@ -488,7 +488,7 @@ Terraform will perform the following actions:
   + resource "google_project_service" "required" {
       + disable_on_destroy = false
       + id                 = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + service            = "vpcaccess.googleapis.com"
     }
 
@@ -503,7 +503,7 @@ Terraform will perform the following actions:
       + expire_time           = (known after apply)
       + id                    = (known after apply)
       + name                  = (known after apply)
-      + project               = "my-gcp-project-prod-12345"
+      + project               = "my-gcp-project-prod-123450"
       + secret_id             = "db_password"
       + terraform_labels      = {
           + "goog-terraform-provisioned" = "true"
@@ -558,7 +558,7 @@ Terraform will perform the following actions:
       + name               = "production-app-network-private-ip-range"
       + network            = "production-app-network"
       + prefix_length      = 16
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + purpose            = "VPC_PEERING"
       + self_link          = (known after apply)
       + terraform_labels   = {
@@ -595,7 +595,7 @@ Terraform will perform the following actions:
       + name                           = "production-app-db"
       + node_count                     = (known after apply)
       + private_ip_address             = (known after apply)
-      + project                        = "my-gcp-project-prod-12345"
+      + project                        = "my-gcp-project-prod-123450"
       + psc_service_attachment_link    = (known after apply)
       + public_ip_address              = (known after apply)
       + region                         = "us-central1"
@@ -650,7 +650,7 @@ Terraform will perform the following actions:
       + name                    = "teamavail"
       + password                = (sensitive value)
       + password_wo             = (write-only attribute)
-      + project                 = "my-gcp-project-prod-12345"
+      + project                 = "my-gcp-project-prod-123450"
       + sql_server_user_details = (known after apply)
     }
 
@@ -662,11 +662,11 @@ Terraform will perform the following actions:
       + machine_type       = "e2-micro"
       + max_instances      = 3
       + max_throughput     = (known after apply)
-      + min_instances      = 1
+      + min_instances      = 2
       + min_throughput     = (known after apply)
       + name               = "production-app-con"
       + network            = (known after apply)
-      + project            = "my-gcp-project-prod-12345"
+      + project            = "my-gcp-project-prod-123450"
       + region             = "us-central1"
       + self_link          = (known after apply)
       + state              = (known after apply)

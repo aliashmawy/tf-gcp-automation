@@ -74,8 +74,8 @@ variable "ip_cidr_range_connector" {
   type        = string
 }
 
-variable "roles" {
-  description = "roles for sa"
+variable "cloudrun_roles" {
+  description = "roles for sa cloud run"
   type        = list(string)
 }
 
