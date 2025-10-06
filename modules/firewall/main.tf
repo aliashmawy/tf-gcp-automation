@@ -4,7 +4,7 @@ resource "google_compute_firewall" "sql_firewall" {
   project = var.project_id
 
   allow {
-    protocol = "tcp"
+    protocol = var.protocol_type
     ports    = var.allowed_ports_sql
   }
 

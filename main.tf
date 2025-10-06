@@ -3,10 +3,10 @@ provider "google" {
 }
 
 module "project" {
-  source       = "./modules/project"
-  project_name = var.project_name
-  project_id   = var.project_id
-  enabled_apis = var.enabled_apis
+  source                  = "./modules/project"
+  project_name            = var.project_name
+  project_id              = var.project_id
+  enabled_apis            = var.enabled_apis
   project_deletion_policy = var.project_deletion_policy
 }
 
@@ -20,13 +20,14 @@ module "network" {
 }
 
 module "firewall" {
-  source        = "./modules/firewall"
-  vpc_name      = module.network.vpc_name
-  project_id    = module.project.project_id
-  firewall_name = "${var.project_name}-firewall"
+  source            = "./modules/firewall"
+  vpc_name          = module.network.vpc_name
+  project_id        = module.project.project_id
+  firewall_name     = "${var.project_name}-firewall"
   allowed_ports_sql = var.allowed_ports_sql
-  #change this in the future to tags outputted from sql module
-  target_tags_sql = var.target_tags_sql
+  target_tags_sql   = var.target_tags_sql
+  protocol_type     = var.protocol_type
+  source_ranges     = var.source_ranges
 }
 
 module "sql" {
@@ -40,12 +41,14 @@ module "sql" {
   db_password_secret = module.secrets.db_password_secret_name
   network_self_link  = module.network.network_self_link
   network_id         = module.network.network_id
+  sql_user           = var.sql_user
 }
 
 module "secrets" {
   source       = "./modules/secrets"
   project_id   = module.project.project_id
   project_name = var.project_name
+  secret_id    = var.secret_id
 }
 
 module "cloudrun" {

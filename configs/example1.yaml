@@ -19,61 +19,42 @@ modules:
 
   network:
     selected: true
-    project_id: my-gcp-project-prod-12345
     region: us-central1
-    ip_cidr_range: 10.10.0.0/24
+    ip_cidr_range: 10.0.0.0/16
 
   firewall:
     selected: true
-    vpc_name: production-app-network
-    project_id: my-gcp-project-prod-12345
+    protocol_type: tcp
     allowed_ports_sql: ['5432', '443']
     target_tags_sql: ["sql"]
+    source_ranges: [ ["0.0.0.0/0"]]
+
 
   sql:
     selected: true
-    project_id: my-gcp-project-prod-12345
-    project_name: production-app
-    region: us-central1
-    vpc_name: production-app-network
     db_version: POSTGRES_15
     db_tier: db-custom-2-7680
-    db_password_secret: production-app-db-password
-    network_id: production-app-network
+    sql_user: teamavail
 
   secrets:
     selected: true
-    project_id: my-gcp-project-prod-12345
-    project_name: production-app
+    secret_id: db_password
 
   cloudrun:
     selected: true
-    project_id: my-gcp-project-prod-12345
     cloudrun_name: production-backend-api
-    region: us-central1
-    db_name: production-db
-    db_port: 5432
     image_name: gcr.io/my-gcp-project-prod-12345/backend-api:v1.2.3
     container_name: backend-api-container
-    db_host: 10.10.0.5
-    db_user_name: postgres
-    db_password_secret: production-app-db-password
     container_port: 8080
-    vpc_connector_id: production-app-connector
-    sa_email: cloudrun-sa-prod@my-gcp-project-prod-12345.iam.gserviceaccount.com
 
   vpc_connector:
     selected: true
-    project_id: my-gcp-project-prod-12345
-    network_id: production-app-network
-    region: us-central1
     ip_cidr_range_connector: 10.8.0.0/28
 
   iam:
     selected: true
-    project_id: my-gcp-project-prod-12345
     service_account_id: cloudrun-sa-prod
-    display_name: Cloud Run Service Account - Production
+    display_name: Cloud Run Service Account
     roles:
       - roles/cloudsql.client
       - roles/secretmanager.secretAccessor
@@ -82,14 +63,7 @@ modules:
 
   load-balancer:
     selected: true
-    project_name: production-app
-    project_id: my-gcp-project-prod-12345
-    region: us-central1
-    cloud_run_service_name: production-backend-api
 
   monitoring:
     selected: true
-    project_id: my-gcp-project-prod-12345
-    project_name: production-app
-    cloud_run_service_name: production-backend-api
-    alert_email: devops-team@company.com
+    alert_email: aliashmawy595@gmail.com

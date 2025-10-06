@@ -23,6 +23,11 @@ variable "project_deletion_policy" {
   type = string
 }
 
+variable "secret_id" {
+  description = "name of secret"
+  type = string
+}
+
 variable "db_version" {
   description = "version for postgres db"
   type        = string
@@ -31,6 +36,11 @@ variable "db_version" {
 variable "db_tier" {
   description = "db instance tier"
   type        = string
+}
+
+variable "sql_user" {
+  description = "user name for sql"
+  type = string
 }
 
 variable "cloudrun_name" {
@@ -91,4 +101,14 @@ variable "allowed_ports_sql" {
 variable "target_tags_sql" {
   description = "Targeted tags for sql firewall"
   type = list(string)
+}
+
+variable "protocol_type" {
+  description = "protoctol type for allowed port"
+  type = string
+}
+
+variable "source_ranges" {
+  description = "Source IP ranges allowed"
+  type        = list(string)
 }

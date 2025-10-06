@@ -1,9 +1,3 @@
-variable "project_name" {
-  description = "project name"
-  type = string
-}
-
-variable "project_id" {
-  description = "project id"
-  type = string
-}
+variable "project_name" {}
+variable "project_id" {}
+variable "secret_id" {}

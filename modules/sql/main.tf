@@ -1,6 +1,6 @@
 #Reserve Internal IP range
 resource "google_compute_global_address" "private_ip_range" {
-  name          = "${var.project_name}-private-ip-range"
+  name          = "${var.vpc_name}-private-ip-range"
   project       = var.project_id
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
@@ -19,7 +19,6 @@ resource "google_sql_database_instance" "db" {
   project          = var.project_id
   region           = var.region
   database_version = var.db_version
-
   deletion_protection = false
 
   settings {
@@ -34,7 +33,7 @@ resource "google_sql_database_instance" "db" {
 }
 
 resource "google_sql_user" "db_user" {
-  name     = "teamavail"
+  name     = var.sql_user
   instance = google_sql_database_instance.db.name
   password = data.google_secret_manager_secret_version.db_password.secret_data
   project  = var.project_id
