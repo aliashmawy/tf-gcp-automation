@@ -74,6 +74,4 @@ jobs:
 
       #  Run deploy.py
       - name: Run deployment script
-        run: |
-          cd scripts
-           python scripts/deploy.py --overwrite
+        run: python scripts/deploy.py --overwrite
