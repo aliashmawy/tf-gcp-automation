@@ -4,7 +4,7 @@ modules:
   project:
     selected: true
     project_name: production-app
-    project_id: my-gcp-project-prod-12345
+    project_id: my-gcp-project-prod-123450
     project_deletion_policy: DELETE
     enabled_apis:
       - compute.googleapis.com
@@ -27,7 +27,7 @@ modules:
     protocol_type: tcp
     allowed_ports_sql: ['5432', '443']
     target_tags_sql: ["sql"]
-    source_ranges: [ ["0.0.0.0/0"]]
+    source_ranges:  ["0.0.0.0/0"]
 
 
   sql:

@@ -34,4 +34,4 @@ alert_email = "aliashmawy595@gmail.com"
 service_account_id = "cloudrun-sa"
 display_name = "Cloud Run Service Account"
 protocol_type = "tcp"
-source_ranges = [ ["0.0.0.0/0"]]
+source_ranges = ["0.0.0.0/0"]
