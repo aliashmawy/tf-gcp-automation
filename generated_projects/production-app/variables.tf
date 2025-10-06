@@ -18,11 +18,6 @@ variable "project_name" {
   type        = string
 }
 
-variable "project_deletion_policy" {
-  description = "deletion policy for project"
-  type = string
-}
-
 variable "db_version" {
   description = "version for postgres db"
   type        = string
@@ -58,6 +53,7 @@ variable "ip_cidr_range" {
   description = "cidr range for subnet1"
   type        = string
 }
+
 variable "ip_cidr_range_connector" {
   description = "cidr range for vpc connector instances"
   type        = string

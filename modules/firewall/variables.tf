@@ -8,12 +8,12 @@ variable "vpc_name" {
   type = string
 }
 
-variable "allowed_ports" {
+variable "allowed_ports_sql" {
   description = "ports to allow"
   type = list(string)
 }
 
-variable "target_tags" {
+variable "target_tags_sql" {
   type        = list(string)
   description = "VM target tags for the firewall"
 }

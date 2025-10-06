@@ -3,15 +3,14 @@ provider "google" {
 }
 
 module "project" {
-  source       = "./modules/project"
+  source       = "../../modules/project"
   project_name = var.project_name
   project_id   = var.project_id
   enabled_apis = var.enabled_apis
-  project_deletion_policy = var.project_deletion_policy
 }
 
 module "network" {
-  source        = "./modules/network"
+  source        = "../../modules/network"
   project_id    = module.project.project_id
   region        = var.region
   vpc_name      = "${var.project_name}-network"
@@ -20,7 +19,7 @@ module "network" {
 }
 
 module "firewall" {
-  source        = "./modules/firewall"
+  source        = "../../modules/firewall"
   vpc_name      = module.network.vpc_name
   project_id    = module.project.project_id
   firewall_name = "${var.project_name}-firewall"
@@ -30,7 +29,7 @@ module "firewall" {
 }
 
 module "sql" {
-  source             = "./modules/sql"
+  source             = "../../modules/sql"
   project_id         = module.project.project_id
   project_name       = var.project_name
   region             = var.region
@@ -43,13 +42,13 @@ module "sql" {
 }
 
 module "secrets" {
-  source       = "./modules/secrets"
+  source       = "../../modules/secrets"
   project_id   = module.project.project_id
   project_name = var.project_name
 }
 
 module "cloudrun" {
-  source             = "./modules/cloudrun"
+  source             = "../../modules/cloudrun"
   project_id         = module.project.project_id
   cloudrun_name      = var.cloudrun_name
   region             = var.region
@@ -66,7 +65,7 @@ module "cloudrun" {
 }
 
 module "vpc_connector" {
-  source                  = "./modules/vpc_connector"
+  source                  = "../../modules/vpc_connector"
   project_id              = module.project.project_id
   network_id              = module.network.network_id
   connector_name          = "${var.project_name}-con"
@@ -75,7 +74,7 @@ module "vpc_connector" {
 }
 
 module "iam" {
-  source             = "./modules/iam"
+  source             = "../../modules/iam"
   project_id         = module.project.project_id
   service_account_id = var.service_account_id
   display_name       = var.display_name
@@ -83,7 +82,7 @@ module "iam" {
 }
 
 module "load-balancer" {
-  source                 = "./modules/load-balancer"
+  source                 = "../../modules/load-balancer"
   project_name           = var.project_name
   project_id             = module.project.project_id
   region                 = var.region
@@ -92,7 +91,7 @@ module "load-balancer" {
 }
 
 module "monitoring" {
-  source                 = "./modules/monitoring"
+  source                 = "../../modules/monitoring"
   project_id             = module.project.project_id
   project_name           = var.project_name
   cloud_run_service_name = module.cloudrun.cloud_run_service_name

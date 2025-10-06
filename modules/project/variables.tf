@@ -12,3 +12,8 @@ variable "enabled_apis" {
   description = "List of APIs to enable in the project"
   type        = list(string)
 }
+
+variable "project_deletion_policy" {
+  description = "deletion policy for project"
+  type = string
+}

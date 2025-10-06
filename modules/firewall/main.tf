@@ -5,9 +5,9 @@ resource "google_compute_firewall" "sql_firewall" {
 
   allow {
     protocol = "tcp"
-    ports    = var.allowed_ports
+    ports    = var.allowed_ports_sql
   }
 
-  target_tags   = var.target_tags
+  target_tags   = var.target_tags_sql
   source_ranges = var.source_ranges
 }
