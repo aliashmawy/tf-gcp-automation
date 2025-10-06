@@ -1,5 +1,5 @@
 resource "google_monitoring_alert_policy" "cloud_run_cpu" {
-  display_name = "${var.project_name}-cloud-run-high-cpu"
+  display_name = "${var.cloud_run_service_name}-high-cpu"
   project      = var.project_id
   combiner     = "OR"
   

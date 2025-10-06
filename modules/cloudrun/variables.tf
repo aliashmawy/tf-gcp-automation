@@ -1,0 +1,13 @@
+variable "cloudrun_name" {}
+variable "region" {}
+variable "project_id" {}
+variable "container_name" {}
+variable "image_name" {}
+variable "container_port" {}
+variable "db_host" {}
+variable "db_name" {}
+variable "db_port" {}
+variable "db_user_name" {}
+variable "db_password_secret" {}
+variable "vpc_connector_id" {}
+variable "sa_email" {}

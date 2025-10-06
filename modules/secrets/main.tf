@@ -1,6 +1,6 @@
 
 resource "google_secret_manager_secret" "db_password" {
-  secret_id = "db-password"
+  secret_id = var.secret_id
   project   = var.project_id
 
   replication {

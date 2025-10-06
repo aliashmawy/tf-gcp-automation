@@ -68,6 +68,7 @@ variable "ip_cidr_range" {
   description = "cidr range for subnet1"
   type        = string
 }
+
 variable "ip_cidr_range_connector" {
   description = "cidr range for vpc connector instances"
   type        = string

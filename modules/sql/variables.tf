@@ -1,0 +1,10 @@
+variable "vpc_name" {}
+variable "project_id" {}
+variable "project_name" {}
+variable "region" {}
+variable "db_version" {}
+variable "db_tier" {}
+variable "db_password_secret" {}
+variable "network_self_link" {}
+variable "network_id" {}
+variable "sql_user" {}

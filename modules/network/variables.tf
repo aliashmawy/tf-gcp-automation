@@ -1,18 +1,5 @@
-variable "vpc_name" {
-  type = string
-}
-
-variable "subnet1_name" {
-  type = string
-}
-
-variable "project_id" {
-  type = string
-}
-
-variable "region" {
-  type = string
-}
-variable "ip_cidr_range" {
-  type = string
-}
+variable "vpc_name" {}
+variable "subnet1_name" {}
+variable "project_id" {}
+variable "region" {}
+variable "ip_cidr_range" {}
