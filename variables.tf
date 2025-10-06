@@ -67,3 +67,11 @@ variable "alert_email" {
   description = "alert email"
   type        = string
 }
+
+
+variable "labels" {
+  type = map(string)
+}
+variable "billing_account" {
+  type = string
+}

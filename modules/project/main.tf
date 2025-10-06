@@ -1,17 +1,22 @@
+module "network" {
+  source          = "../network"
+  vpc_name        = "${var.project_name}-network"
+  subnet1_name    = "${var.project_name}-subnet"
+  ip_cidr_range   = var.ip_cidr_range
+  region          = var.region
+  project_id      = var.project_id
+}
+
 resource "google_project" "my_project" {
   name       = var.project_name
   project_id = var.project_id
-  billing_account = data.google_billing_account.acct.id
-}
-data "google_billing_account" "acct" {
-  display_name = "My Billing Account"
-  open         = true
+  labels     = var.labels
+  billing_account = var.billing_account
+  deletion_policy = "DELETE"
 }
 
 resource "google_project_service" "required" {
   for_each = toset(var.enabled_apis)
-
-  project             = var.project_id
-  service             = each.value
-  disable_on_destroy  = false
+  project  = google_project.my_project.project_id
+  service  = each.key
 }

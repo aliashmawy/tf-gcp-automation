@@ -1,14 +1,8 @@
-variable "project_name" {
-  description = "name of the project"
-  type = string
-}
+variable "project_id" { type = string }
+variable "project_name" { type = string }
 
-variable "project_id" {
-  description = "id of the project"
-  type = string
-}
-
-variable "enabled_apis" {
-  description = "List of APIs to enable in the project"
-  type        = list(string)
-}
+variable "billing_account" { type = string }
+variable "labels" { type = map(string) }
+variable "enabled_apis" { type = list(string) }
+variable "region" { type = string }
+variable "ip_cidr_range" { type = string }

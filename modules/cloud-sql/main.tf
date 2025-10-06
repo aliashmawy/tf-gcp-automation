@@ -38,7 +38,9 @@ resource "google_sql_user" "db_user" {
   instance = google_sql_database_instance.db.name
   password = data.google_secret_manager_secret_version.db_password.secret_data
   project  = var.project_id
+  
 }
+
 
 data "google_secret_manager_secret_version" "db_password" {
   secret = var.db_password_secret

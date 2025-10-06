@@ -1,7 +1,10 @@
-project_id   = "tf-beshoy-proj"
-project_name = "beshoy-intern-proj"
-
-
+project_id   = "beshoy-intern-proj-88"
+project_name = "beshoy-intern-proj-88"
+labels = {
+  owner = "intern"
+  environment = "test"
+}
+billing_account = "0147B7-2560AC-CA1A2B"
 region                  = "us-central1"
 ip_cidr_range           = "10.10.0.0/24"
 ip_cidr_range_connector = "10.20.0.0/28"

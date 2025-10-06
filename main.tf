@@ -1,25 +1,27 @@
-terraform {
-  backend "gcs" {
-    bucket = "terraform-automation-remote-state"
-  }
-}
+
 provider "google" {
   region = var.region
 }
 
 module "project" {
-  source       = "./modules/project"
-  project_name = var.project_name
-  project_id   = var.project_id
-  enabled_apis = var.enabled_apis
+  source           = "./modules/project"
+  project_id       = var.project_id
+  project_name     = var.project_name
+  billing_account  = var.billing_account
+  labels           = var.labels
+  enabled_apis     = var.enabled_apis
+  region           = var.region
+  ip_cidr_range    = var.ip_cidr_range
 }
+
 
 module "network" {
   source        = "./modules/network"
   project_id    = var.project_id
   region        = var.region
-  vpc_name      = "${var.project_name}-network"
-  subnet1_name  = "${var.project_name}-subnet"
+  vpc_name  = lower("${var.project_name}-network")
+  subnet1_name = lower("${var.project_name}-subnet")
+
   ip_cidr_range = var.ip_cidr_range
 }
 

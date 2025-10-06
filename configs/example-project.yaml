@@ -1,0 +1,14 @@
+project_id: "beshoy-intern-proj-02"
+project_name: "beshoy-intern-proj-02"
+vpc_name     : "beshoy-intern-proj-02"
+subnet1_name : "beshoy-intern-proj-02"
+
+billing_account: "XXXXXX-XXXXXX-XXXXXX"
+labels:
+  owner: intern
+  environment: test
+enabled_apis:
+  - compute.googleapis.com
+  - iam.googleapis.com
+region: "us-central1"
+ip_cidr_range: "10.0.0.0/24"
