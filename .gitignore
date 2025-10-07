@@ -12,3 +12,10 @@ override.tf.json
 Thumbs.db
 __pycache__/
 *.pyc
+# GCP Credentials
+**/gcp-credentials.json
+**/*credentials*.json
+*.json
+# Or be more specific if you know the exact path/name
+credentials.json
+gcp-key.json
