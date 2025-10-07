@@ -85,7 +85,6 @@ def load_yaml_configs(config_dir: str) -> List[Dict]:
 
 #generate dependency map by using the first 2 functions above
 def load_dependency_map(template_dir: str) -> Dict[str, List[str]]:
-    print(f"Loading dependency map from template: {template_dir}")
     
     template_path = Path(template_dir)
     
@@ -113,10 +112,8 @@ def load_dependency_map(template_dir: str) -> Dict[str, List[str]]:
             return {}
     
     try:
-        print("Generating dependency graph from template...")
         dot_output = get_terraform_graph(str(template_path))
         dependencies = parse_terraform_graph(dot_output)
-        print(f"Dependency map loaded: {dependencies}")
         return dependencies
     except subprocess.CalledProcessError as e:
         print(f"Error: Failed to generate dependency graph: {e}")
@@ -388,9 +385,6 @@ def process_project(
     overwrite: bool = False
 ) -> bool:
     project_name = config.get('project_name', 'unnamed-project')
-    print(f"\n{'='*60}")
-    print(f"Processing project: {project_name}")
-    print(f"{'='*60}")
     
     modules_config = config.get('modules', {})
     selected_modules_dict = {
@@ -413,9 +407,7 @@ def process_project(
         for error in errors:
             print(f"  - {error}")
         return False
-    
-    print("Dependency validation passed")
-    
+
     project_path = generate_project_structure(project_name, output_dir, overwrite)
     
     if project_path is None:
@@ -437,7 +429,7 @@ def process_project(
         print(f"Error: Terraform plan failed for '{project_name}'")
         return False
     
-    print(f"Project '{project_name}' generated successfully ✓")
+    print(f"Project '{project_name}' generated successfully")
     return True
 
 
@@ -448,19 +440,11 @@ def main():
     parser.add_argument('--overwrite', action='store_true', help='Overwrite existing project directories')
     args = parser.parse_args()
     
-    print("Starting Terraform Project Generator")
-    print(f"Template directory: {TEMPLATE_DIR}")
-    print(f"Configs directory: {CONFIGS_DIR}")
-    print(f"Output directory: {OUTPUT_DIR}")
-    print(f"Overwrite mode: {'ENABLED' if args.overwrite else 'DISABLED'}")
-    
     configs = load_yaml_configs(CONFIGS_DIR)
     
     if not configs:
         print("Error: No configurations found. Exiting.")
         sys.exit(1)
-    
-    print(f"Found {len(configs)} configuration(s)")
     
     dependency_map = load_dependency_map(TEMPLATE_DIR)
     
@@ -478,7 +462,7 @@ def main():
     print(f"{'='*60}")
     
     for project_name, success in results:
-        status = "✓ SUCCESS" if success else "✗ FAILED"
+        status = "SUCCESS" if success else "FAILED"
         print(f"{project_name}: {status}")
     
     successful = sum(1 for _, success in results if success)
