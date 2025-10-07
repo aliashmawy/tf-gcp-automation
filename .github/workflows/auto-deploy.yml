@@ -8,8 +8,6 @@ on:
     paths:
       - 'configs/*.yaml'
       - 'configs/*.yml'
-
-      
   workflow_dispatch:
 
 jobs:
@@ -22,7 +20,7 @@ jobs:
       id-token: write
 
     env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_Credentials}}
+      GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS}}
       TF_IN_AUTOMATION: true
       TF_INPUT: false
 
@@ -55,7 +53,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-           credentials_json: ${{ secrets.GCP_Credentials }}
+           credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
       - name: Install gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
@@ -78,11 +76,27 @@ jobs:
       - name: Run deployment script
         run: python scripts/deploy.py --overwrite
 
-      #  Commit and push generated Terraform project
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Auto-generate Terraform project from config"
+          commit_message: "Auto-update Terraform project"
           commit_user_name: GitHub Actions Bot
           commit_user_email: actions@github.com
           commit_author: GitHub Actions <actions@github.com>
+          file_pattern: "generated_projects/**"
+
+      - name: Notify Slack
+        if: success()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "Provisioning completed successfully! 🎉",
+              "username": "GitHub Actions",
+              "icon_emoji": ":rocket:"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
