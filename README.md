@@ -36,7 +36,12 @@ tf-gcp-automation/
       - terraform.tfvars
       - plan.txt
   - scripts/
+    - __init__.py
     - deploy.py
+    - terraform_utils.py
+    - config_loader.py
+    - template_processor.py
+    - project_generator.py
   - terraform.tfvars
   - variables.tf
 ```
@@ -62,21 +67,6 @@ gcloud auth application-default login
 gcloud config set project <YOUR_PROJECT_ID>
 ```
 
----
-
-## Backend: Remote State
-This repo is configured to use a GCS bucket for Terraform remote state:
-
-```hcl
-terraform {
-  backend "gcs" {
-    bucket = "terraform-automation-remote-state"
-  }
-}
-```
-
-Before running `terraform init`:
-- Create the bucket named `terraform-automation-remote-state` in your GCP account
 ---
 
 ## Usage
@@ -121,14 +111,48 @@ Notes:
 
 ---
 
-## YAML-driven project generator (scripts/deploy.py)
+## Python Script (scripts/)
 
-Use `scripts/deploy.py` to generate tailored Terraform projects from YAML files under `configs/`. For each YAML file, the script:
-- Parses selected modules and their input variables
-- Builds a module dependency map using `terraform graph`
-- Validates dependencies, then generates a filtered `main.tf` and `variables.tf`
-- Writes a `terraform.tfvars` with only the needed variables
-- Runs `terraform init` and `terraform plan`, saving the output to `plan.txt`
+The script is organized into focused modules for better maintainability. The main entry point is `scripts/deploy.py` which orchestrates the entire process.
+
+### Script modules overview
+
+**`deploy.py`** - Main orchestration script
+- Entry point for the entire generation process
+- Loads configurations and coordinates all other modules
+- Handles command-line arguments and provides summary output
+
+**`terraform_utils.py`** - Terraform graph and dependency management
+- `get_terraform_graph()` - Runs `terraform graph` command
+- `parse_terraform_graph()` - Parses graph output to extract module dependencies
+- `load_dependency_map()` - Builds complete dependency map from template
+- `validate_dependencies()` - Ensures selected modules have all required dependencies
+
+**`config_loader.py`** - YAML configuration handling
+- `load_yaml_configs()` - Loads all YAML files from `configs/` directory
+- `extract_selected_modules()` - Extracts modules marked as `selected: true`
+
+**`template_processor.py`** - Template filtering and generation
+- `filter_main_tf()` - Filters `main.tf` to include only selected modules
+- `filter_variables_tf()` - Filters `variables.tf` to include only needed variables
+- `generate_tfvars()` - Creates `terraform.tfvars` from module configurations
+- `format_tfvars_value()` - Formats values for Terraform variable files
+
+**`project_generator.py`** - Project creation and Terraform operations
+- `generate_project_structure()` - Creates project directories
+- `copy_and_filter_templates()` - Copies and filters template files
+- `run_terraform_init()` - Runs `terraform init` in project directories
+- `run_terraform_plan()` - Runs `terraform plan` and saves output to `plan.txt`
+
+**`__init__.py`** - Makes `scripts/` a Python package for proper imports
+
+### How it works
+For each YAML file, the system:
+1. Parses selected modules and their input variables
+2. Builds a module dependency map using `terraform graph`
+3. Validates dependencies, then generates filtered `main.tf` and `variables.tf`
+4. Writes a `terraform.tfvars` with only the needed variables
+5. Runs `terraform init` and `terraform plan`, saving output to `plan.txt`
 
 ### Prerequisites
 - Python 3.8+
@@ -160,17 +184,21 @@ modules:
 
 Only modules with `selected: true` are included. Their provided keys become variables in the generated `terraform.tfvars`.
 
-### How it works (internals)
-- The script runs `terraform graph` against the repo root to build a dependency map and avoid generating invalid combinations
-- It filters the template `main.tf` to include only the selected modules, automatically fixing `source` paths for generated projects
-- It filters `variables.tf` to include only variables required by the selected modules, plus core variables like `project_id`, `region`, `project_name`
-- It then runs `terraform init` and `terraform plan` inside each generated project directory
+### Module interaction flow
+1. **`deploy.py`** loads YAML configs via **`config_loader.py`**
+2. **`terraform_utils.py`** builds dependency map from `terraform graph`
+3. **`config_loader.py`** extracts selected modules from each YAML
+4. **`terraform_utils.py`** validates module dependencies
+5. **`project_generator.py`** creates project structure
+6. **`template_processor.py`** filters templates and generates files
+7. **`project_generator.py`** runs `terraform init` and `terraform plan`
 
-### Running the generator
+### Running the script
 Run from the repository root:
 ```bash
 python3 scripts/deploy.py              # generate projects for all YAMLs in configs/
 python3 scripts/deploy.py --overwrite  # allow overwriting existing generated project folders
+python3 scripts/deploy.py --help       # show available options
 ```
 
 Output appears under `generated_projects/<project_name>/`:
