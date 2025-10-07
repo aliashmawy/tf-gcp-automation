@@ -1,0 +1,178 @@
+module.project.data.google_billing_account.acct: Reading...
+module.project.data.google_billing_account.acct: Read complete after 1s [id=0147B7-2560AC-CA1A2B]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # module.firewall.google_compute_firewall.sql_firewall will be created
+  + resource "google_compute_firewall" "sql_firewall" {
+      + creation_timestamp = (known after apply)
+      + destination_ranges = (known after apply)
+      + direction          = (known after apply)
+      + enable_logging     = (known after apply)
+      + id                 = (known after apply)
+      + name               = "production-app-firewall"
+      + network            = "production-app-network"
+      + priority           = 1000
+      + project            = "my-gcp-project-prod-543224"
+      + self_link          = (known after apply)
+      + source_ranges      = [
+          + "0.0.0.0/0",
+        ]
+      + target_tags        = [
+          + "sql",
+        ]
+
+      + allow {
+          + ports    = [
+              + "5432",
+              + "443",
+            ]
+          + protocol = "tcp"
+        }
+    }
+
+  # module.network.google_compute_network.vpc will be created
+  + resource "google_compute_network" "vpc" {
+      + auto_create_subnetworks                   = false
+      + bgp_always_compare_med                    = (known after apply)
+      + bgp_best_path_selection_mode              = (known after apply)
+      + bgp_inter_region_cost                     = (known after apply)
+      + delete_default_routes_on_create           = false
+      + gateway_ipv4                              = (known after apply)
+      + id                                        = (known after apply)
+      + internal_ipv6_range                       = (known after apply)
+      + mtu                                       = (known after apply)
+      + name                                      = "production-app-network"
+      + network_firewall_policy_enforcement_order = "AFTER_CLASSIC_FIREWALL"
+      + network_id                                = (known after apply)
+      + numeric_id                                = (known after apply)
+      + project                                   = "my-gcp-project-prod-543224"
+      + routing_mode                              = (known after apply)
+      + self_link                                 = (known after apply)
+    }
+
+  # module.network.google_compute_subnetwork.subnet1 will be created
+  + resource "google_compute_subnetwork" "subnet1" {
+      + creation_timestamp         = (known after apply)
+      + external_ipv6_prefix       = (known after apply)
+      + fingerprint                = (known after apply)
+      + gateway_address            = (known after apply)
+      + id                         = (known after apply)
+      + internal_ipv6_prefix       = (known after apply)
+      + ip_cidr_range              = "10.0.0.0/16"
+      + ipv6_cidr_range            = (known after apply)
+      + ipv6_gce_endpoint          = (known after apply)
+      + name                       = "production-app-subnet"
+      + network                    = (known after apply)
+      + private_ip_google_access   = (known after apply)
+      + private_ipv6_google_access = (known after apply)
+      + project                    = "my-gcp-project-prod-543224"
+      + purpose                    = (known after apply)
+      + region                     = "us-central1"
+      + self_link                  = (known after apply)
+      + stack_type                 = (known after apply)
+      + state                      = (known after apply)
+      + subnetwork_id              = (known after apply)
+
+      + secondary_ip_range (known after apply)
+    }
+
+  # module.project.google_project.my_project will be created
+  + resource "google_project" "my_project" {
+      + auto_create_network = true
+      + billing_account     = "0147B7-2560AC-CA1A2B"
+      + deletion_policy     = "DELETE"
+      + effective_labels    = {
+          + "goog-terraform-provisioned" = "true"
+        }
+      + id                  = (known after apply)
+      + name                = "production-app"
+      + number              = (known after apply)
+      + project_id          = "my-gcp-project-prod-543224"
+      + terraform_labels    = {
+          + "goog-terraform-provisioned" = "true"
+        }
+    }
+
+  # module.project.google_project_service.required["cloudresourcemanager.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "cloudresourcemanager.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["compute.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "compute.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["logging.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "logging.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["monitoring.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "monitoring.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["run.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "run.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["secretmanager.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "secretmanager.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["servicenetworking.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "servicenetworking.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["sqladmin.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "sqladmin.googleapis.com"
+    }
+
+  # module.project.google_project_service.required["vpcaccess.googleapis.com"] will be created
+  + resource "google_project_service" "required" {
+      + disable_on_destroy = false
+      + id                 = (known after apply)
+      + project            = "my-gcp-project-prod-543224"
+      + service            = "vpcaccess.googleapis.com"
+    }
+
+Plan: 13 to add, 0 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
