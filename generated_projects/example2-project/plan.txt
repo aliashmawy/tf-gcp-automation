@@ -1,5 +1,5 @@
 module.project.data.google_billing_account.acct: Reading...
-module.project.data.google_billing_account.acct: Read complete after 1s [id=0147B7-2560AC-CA1A2B]
+module.project.data.google_billing_account.acct: Read complete after 0s [id=0147B7-2560AC-CA1A2B]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -77,8 +77,6 @@ Terraform will perform the following actions:
       + stack_type                 = (known after apply)
       + state                      = (known after apply)
       + subnetwork_id              = (known after apply)
-
-      + secondary_ip_range (known after apply)
     }
 
   # module.project.google_project.my_project will be created
@@ -171,8 +169,3 @@ Terraform will perform the following actions:
     }
 
 Plan: 13 to add, 0 to change, 0 to destroy.
-
-─────────────────────────────────────────────────────────────────────────────
-
-Note: You didn't use the -out option to save this plan, so Terraform can't
-guarantee to take exactly these actions if you run "terraform apply" now.
