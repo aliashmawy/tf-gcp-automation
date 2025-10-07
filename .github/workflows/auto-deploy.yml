@@ -8,6 +8,8 @@ on:
     paths:
       - 'configs/*.yaml'
       - 'configs/*.yml'
+
+      
   workflow_dispatch:
 
 jobs:
@@ -53,7 +55,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+           credentials_json: ${{ secrets.GCP_Credentials }}
 
       - name: Install gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
