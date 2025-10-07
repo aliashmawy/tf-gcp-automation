@@ -1,4 +1,4 @@
-project_name: example1-project
+project_name: example1-project4
 
 modules:
   project:
@@ -65,5 +65,5 @@ modules:
     selected: true
 
   monitoring:
-    selected: true
+    selected: false
     alert_email: aliashmawy595@gmail.com
