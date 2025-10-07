@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       id-token: write
 
     env:
@@ -77,3 +77,12 @@ jobs:
       #  Run deploy.py
       - name: Run deployment script
         run: python scripts/deploy.py --overwrite
+
+      #  Commit and push generated Terraform project
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-generate Terraform project from config"
+          commit_user_name: GitHub Actions Bot
+          commit_user_email: actions@github.com
+          commit_author: GitHub Actions <actions@github.com>
