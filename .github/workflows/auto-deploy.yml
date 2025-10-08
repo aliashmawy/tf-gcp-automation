@@ -34,7 +34,13 @@ jobs:
       - name: Check for new config files
         id: new_files
         run: |
-          git diff --name-status HEAD~1 HEAD | grep '^A.*configs/' || echo "NO_NEW_FILES"
+          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD | grep '^configs/' || true)
+          if [ -z "$NEW_FILES" ]; then
+            echo "no_new_files=true" >> $GITHUB_OUTPUT
+          else
+            echo "no_new_files=false" >> $GITHUB_OUTPUT
+            echo "new_files=$(echo $NEW_FILES | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+          fi
         continue-on-error: true
 
       # Setup Python
@@ -85,12 +91,19 @@ jobs:
           git config --global user.email "${GIT_USER_EMAIL}"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
 
-      # Create new branch, commit, and push generated_projects
+      # Commit and push generated projects
       - name: Commit and push generated projects
-        env: 
-          BRANCH_NAME: my-new-branch
+        env:
+          NEW_FILES: ${{ steps.new_files.outputs.new_files }}
         run: |
-          git checkout -B $BRANCH_NAME
-          git add generated_projects
-          git commit -m "Add generated projects from workflow run ${{ github.run_number }}" || echo "No changes to commit"
-          git push --set-upstream origin $BRANCH_NAME --force
+          # Derive branch name dynamically
+          TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
+          SAFE_NAME=$(echo "$NEW_FILES" | cut -d',' -f1 | sed 's/configs\///; s/\.ya\?ml//; s/[^a-zA-Z0-9_-]/-/g')
+          BRANCH_NAME="generated-${SAFE_NAME:-projects}-${TIMESTAMP}"
+
+          echo "Branch name: $BRANCH_NAME"
+
+          git checkout -B "$BRANCH_NAME"
+          git add generated_projects || echo "No generated_projects folder found"
+          git commit -m "Add generated projects from $NEW_FILES (run #${{ github.run_number }})" || echo "No changes to commit"
+          git push --set-upstream origin "$BRANCH_NAME" --force
