@@ -97,6 +97,10 @@ What it does:
 - Can also be run manually from the Actions tab (`workflow_dispatch`)
 - Runs the  script to create projects and produce Terraform plans
 
+prerequisites:
+- GCP credentials, git username and email in repository secrets
+- Also you must generate a slack webhook in your channel and add it to as a repository secret as well.
+
 Steps:
 1. Checkout the repo
 2. Optionally detect newly added files under `configs/`
@@ -105,6 +109,8 @@ Steps:
 5. Install `gcloud` and set the `project_id` (replace `your-gcp-project-id` in the workflow)
 6. Setup Terraform 1.8.4
 7. Run `python scripts/deploy.py --overwrite`
+8. Push new changes with the new project generated to a new branch in the same repository
+9. Send a notification to your slack channel if workflow succedded
 
 Notes:
 - Make sure to add the secret `GCP_Credentials` in your repo settings (format: service account JSON)
