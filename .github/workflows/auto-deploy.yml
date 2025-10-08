@@ -23,6 +23,8 @@ jobs:
       GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS}}
       TF_IN_AUTOMATION: true
       TF_INPUT: false
+      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
+      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
 
     steps:
       #  Checkout the repository
@@ -80,8 +82,8 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_TOKEN }}
         run: |
-          git config --global user.name "Beshoy7878"
-          git config --global user.email "beshooseha@gmail.com"
+          git config --global user.name "${GIT_USER_NAME}"
+          git config --global user.email "${GIT_USER_EMAIL}"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
 
       # Create new branch, commit, and push generated_projects
