@@ -1,4 +1,4 @@
-## tf-gcp-automation
+## Terraform-GCP-Automation
 
 This repository provisions a complete, Google Cloud Platform (GCP) environment using Terraform. It automates:
 
