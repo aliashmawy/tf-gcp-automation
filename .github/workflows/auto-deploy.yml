@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+ 
     paths:
       - 'configs/*.yaml'
       - 'configs/*.yml'
@@ -19,54 +20,47 @@ jobs:
       id-token: write
 
     env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS}}
       TF_IN_AUTOMATION: true
       TF_INPUT: false
-      GIT_USER_NAME: ${{ secrets.GIT_USER_NAME }}
-      GIT_USER_EMAIL: ${{ secrets.GIT_USER_EMAIL }}
 
     steps:
-      # Checkout the repository
+      #  Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Detect newly added files only
+        #  Detect newly added files only
       - name: Check for new config files
         id: new_files
         run: |
-          NEW_FILES=$(git diff --name-only --diff-filter=A HEAD~1 HEAD | grep '^configs/' || true)
-          if [ -z "$NEW_FILES" ]; then
-            echo "no_new_files=true" >> $GITHUB_OUTPUT
-          else
-            echo "no_new_files=false" >> $GITHUB_OUTPUT
-            echo "new_files=$(echo $NEW_FILES | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
-          fi
+            git diff --name-status HEAD~1 HEAD | grep '^A.*configs/' || echo "NO_NEW_FILES"
         continue-on-error: true
 
-      # Setup Python
+
+      #  Setup Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Install dependencies
+      #  Install dependencies
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml pydot
 
-      # Authenticate with Google Cloud
+      #  Authenticate with Google Cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
       - name: Install gcloud CLI
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: your-gcp-project-id
+           project_id: your-gcp-project-id
 
-      # Verify GCP authentication
+      #  Verify GCP authentication
       - name: Verify GCP login
         run: |
           gcloud auth list
@@ -78,32 +72,37 @@ jobs:
         with:
           terraform_version: 1.8.4
 
-      # Run deploy.py
+      #  Run deploy.py
       - name: Run deployment script
         run: python scripts/deploy.py --overwrite
       
-      # Configure Git
       - name: Configure Git
         env:
           GH_PAT: ${{ secrets.GH_TOKEN }}
         run: |
-          git config --global user.name "${GIT_USER_NAME}"
-          git config --global user.email "${GIT_USER_EMAIL}"
+          git config --global user.name "Beshoy7878"
+          git config --global user.email "beshooseha@gmail.com"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
 
-      # Commit and push generated projects
+      # Create new branch, commit, and push generated_projects
       - name: Commit and push generated projects
-        env:
-          NEW_FILES: ${{ steps.new_files.outputs.new_files }}
+        
         run: |
-          # Derive branch name dynamically
-          TIMESTAMP=$(date +'%Y%m%d-%H%M%S')
-          SAFE_NAME=$(echo "$NEW_FILES" | cut -d',' -f1 | sed 's/configs\///; s/\.ya\?ml//; s/[^a-zA-Z0-9_-]/-/g')
-          BRANCH_NAME="generated-${SAFE_NAME:-projects}-${TIMESTAMP}"
+          BRANCH_NAME=generated-branch-${{ github.run_number }}
+          git checkout  -B $BRANCH_NAME
+          git add generated_projects
+          git commit -m "Add generated projects from workflow run ${{ github.run_number }}" || echo "No changes to commit"
+          git push --set-upstream origin $BRANCH_NAME --force
 
-          echo "Branch name: $BRANCH_NAME"
-
-          git checkout -B "$BRANCH_NAME"
-          git add generated_projects || echo "No generated_projects folder found"
-          git commit -m "Add generated projects from $NEW_FILES (run #${{ github.run_number }})" || echo "No changes to commit"
-          git push --set-upstream origin "$BRANCH_NAME" --force
+      - name: Notify Slack
+        if: success()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          payload: |
+            {
+              "text": "Provisioning completed successfully! 🎉",
+              "username": "GitHub Actions",
+              "icon_emoji": ":rocket:"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
