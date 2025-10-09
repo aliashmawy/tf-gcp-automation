@@ -30,6 +30,8 @@ jobs:
       #  Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
         #  Detect newly added files only
       - name: Check for new config files
