@@ -36,7 +36,7 @@ jobs:
         id: new_files
         run: |
             git diff --name-status HEAD~1 HEAD | grep '^A.*configs/' || echo "NO_NEW_FILES"
-        continue-on-error: true
+        continue-on-error: false
 
 
       #  Setup Python
