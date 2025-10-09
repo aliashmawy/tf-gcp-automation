@@ -35,7 +35,7 @@ jobs:
       - name: Check for new config files
         id: new_files
         run: |
-            git diff --name-status HEAD~1 HEAD | grep '^A.*configs/' || echo "NO_NEW_FILES"
+            git diff --name-status HEAD~1 HEAD | grep '^A.*configs/'
         continue-on-error: false
 
 
