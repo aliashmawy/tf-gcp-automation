@@ -93,7 +93,7 @@ jobs:
           BRANCH_NAME=generated-branch-${{ github.run_number }}
           git checkout  -B $BRANCH_NAME
           git add generated_projects
-          git commit -m "Add generated projects from workflow run ${{ github.run_number }}" || echo "No changes to commit"
+          git commit -m "Add generated projects from workflow run - ${{ github.run_number }}" || echo "No changes to commit"
           git push --set-upstream origin $BRANCH_NAME --force
 
       - name: Notify Slack
@@ -102,7 +102,7 @@ jobs:
         with:
           payload: |
             {
-              "text": "Provisioning completed successfully! 🎉",
+              "text": "Provisioning completed successfully!",
               "username": "GitHub Actions",
               "icon_emoji": ":rocket:"
             }
