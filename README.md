@@ -312,7 +312,7 @@ for mod, deps in dependencies.items():
 
 ---
 
-## Future enhancements (ideas)
+## Future enhancements
 
 ### Automate creating the remote backend bucket
 
