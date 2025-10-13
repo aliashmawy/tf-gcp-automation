@@ -7,6 +7,7 @@ db_tier = "db-custom-2-7680"
 db_version = "POSTGRES_15"
 display_name = "Cloud Run Service Account"
 enabled_apis = ["compute.googleapis.com", "sqladmin.googleapis.com", "run.googleapis.com", "vpcaccess.googleapis.com", "secretmanager.googleapis.com", "cloudresourcemanager.googleapis.com", "servicenetworking.googleapis.com", "monitoring.googleapis.com", "logging.googleapis.com"]
+existing_billing_account = "My Billing Account"
 image_name = "gcr.io/my-gcp-project-prod-12345/backend-api:v1.2.3"
 ip_cidr_range = "10.0.0.0/16"
 ip_cidr_range_connector = "10.8.0.0/28"

@@ -3,12 +3,13 @@ provider "google" {
 }
 
 module "project" {
-  source                  = "./modules/project"
-  project_name            = var.project_name
-  project_id              = var.project_id
-  enabled_apis            = var.enabled_apis
-  project_deletion_policy = var.project_deletion_policy
-  project_env             = var.project_env
+  source                   = "./modules/project"
+  project_name             = var.project_name
+  project_id               = var.project_id
+  enabled_apis             = var.enabled_apis
+  project_deletion_policy  = var.project_deletion_policy
+  project_env              = var.project_env
+  existing_billing_account = var.existing_billing_account
 }
 
 module "network" {

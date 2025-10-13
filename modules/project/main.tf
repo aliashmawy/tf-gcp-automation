@@ -6,7 +6,7 @@ resource "google_project" "my_project" {
   labels = {"env": "${var.project_env}"}
 }
 data "google_billing_account" "acct" {
-  display_name = "My Billing Account"
+  display_name = var.existing_billing_account
   open         = true
 }
 

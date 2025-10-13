@@ -8,6 +8,11 @@ variable "project_env" {
   type = string
 }
 
+variable "existing_billing_account" {
+  description = "name of the billing account"
+  type = string
+}
+
 variable "region" {
   description = "region for the project"
   type        = string

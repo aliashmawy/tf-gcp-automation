@@ -1,4 +1,4 @@
-project_name: cloudrun-project1
+project_name: cloudrun-project2
 
 modules:
   project:
@@ -6,6 +6,7 @@ modules:
     project_name: production-app
     project_id: my-gcp-project-prod-543224
     project_env: production
+    existing_billing_account: My Billing Account
     project_deletion_policy: DELETE
     enabled_apis:
       - compute.googleapis.com
