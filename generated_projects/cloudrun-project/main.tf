@@ -8,6 +8,7 @@ module "project" {
   project_id              = var.project_id
   enabled_apis            = var.enabled_apis
   project_deletion_policy = var.project_deletion_policy
+  project_env             = var.project_env
 }
 
 module "network" {
@@ -92,12 +93,4 @@ module "load-balancer" {
   region                 = var.region
   cloud_run_service_name = module.cloudrun.cloud_run_service_name
   
-}
-
-module "monitoring" {
-  source                 = "../../modules/monitoring"
-  project_id             = module.project.project_id
-  project_name           = var.project_name
-  cloud_run_service_name = module.cloudrun.cloud_run_service_name
-  alert_email            = var.alert_email
 }

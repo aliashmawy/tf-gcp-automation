@@ -1,5 +1,6 @@
 project_id              = "terraform-automation-by-ali12"
 project_name            = "terraform-automation"
+project_env             = "production"
 project_deletion_policy = "DELETE"
 region                  = "us-central1"
 ip_cidr_range           = "10.10.0.0/24"

@@ -29,6 +29,9 @@ def process_project(
 ) -> bool:
     """Process a single project configuration."""
     project_name = config.get('project_name', 'unnamed-project')
+    print(f"\n{'='*60}")
+    print(f"Processing project: {project_name}")
+    print(f"{'='*60}")
     
     selected_modules_dict = extract_selected_modules(config)
     

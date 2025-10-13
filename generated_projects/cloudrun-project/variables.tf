@@ -3,6 +3,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "project_env" {
+  description = "name of project's environment"
+  type = string
+}
+
 variable "region" {
   description = "region for the project"
   type        = string
@@ -77,11 +82,6 @@ variable "ip_cidr_range_connector" {
 variable "cloudrun_roles" {
   description = "roles for sa cloud run"
   type        = list(string)
-}
-
-variable "alert_email" {
-  description = "alert email"
-  type        = string
 }
 
 variable "service_account_id" {

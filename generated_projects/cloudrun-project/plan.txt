@@ -1,7 +1,7 @@
 module.project.data.google_billing_account.acct: Reading...
 module.cloudrun.data.google_iam_policy.noauth: Reading...
 module.cloudrun.data.google_iam_policy.noauth: Read complete after 0s [id=3450855414]
-module.project.data.google_billing_account.acct: Read complete after 2s [id=0147B7-2560AC-CA1A2B]
+module.project.data.google_billing_account.acct: Read complete after 1s [id=0147B7-2560AC-CA1A2B]
 
 Terraform used the selected providers to generate the following execution
 plan. Resource actions are indicated with the following symbols:
@@ -305,58 +305,6 @@ Terraform will perform the following actions:
       + self_link          = (known after apply)
     }
 
-  # module.monitoring.google_monitoring_alert_policy.cloud_run_cpu will be created
-  + resource "google_monitoring_alert_policy" "cloud_run_cpu" {
-      + combiner              = "OR"
-      + creation_record       = (known after apply)
-      + display_name          = "production-backend-api-high-cpu"
-      + enabled               = true
-      + id                    = (known after apply)
-      + name                  = (known after apply)
-      + notification_channels = (known after apply)
-      + project               = "my-gcp-project-prod-543224"
-
-      + alert_strategy {
-          + auto_close = "1800s"
-        }
-
-      + conditions {
-          + display_name = "Cloud Run CPU utilization above 80%"
-          + name         = (known after apply)
-
-          + condition_threshold {
-              + comparison      = "COMPARISON_GT"
-              + duration        = "300s"
-              + filter          = "resource.type = \"cloud_run_revision\" AND resource.labels.service_name = \"production-backend-api\" AND metric.type = \"run.googleapis.com/container/cpu/utilizations\""
-              + threshold_value = 0.8
-
-              + aggregations {
-                  + alignment_period     = "60s"
-                  + cross_series_reducer = "REDUCE_MEAN"
-                  + group_by_fields      = [
-                      + "resource.service_name",
-                    ]
-                  + per_series_aligner   = "ALIGN_DELTA"
-                }
-            }
-        }
-    }
-
-  # module.monitoring.google_monitoring_notification_channel.email will be created
-  + resource "google_monitoring_notification_channel" "email" {
-      + display_name        = "production-app-email-notifications"
-      + enabled             = true
-      + force_delete        = false
-      + id                  = (known after apply)
-      + labels              = {
-          + "email_address" = "aliashmawy595@gmail.com"
-        }
-      + name                = (known after apply)
-      + project             = "my-gcp-project-prod-543224"
-      + type                = "email"
-      + verification_status = (known after apply)
-    }
-
   # module.network.google_compute_network.vpc will be created
   + resource "google_compute_network" "vpc" {
       + auto_create_subnetworks                   = false
@@ -409,13 +357,18 @@ Terraform will perform the following actions:
       + billing_account     = "0147B7-2560AC-CA1A2B"
       + deletion_policy     = "DELETE"
       + effective_labels    = {
+          + "env"                        = "production"
           + "goog-terraform-provisioned" = "true"
         }
       + id                  = (known after apply)
+      + labels              = {
+          + "env" = "production"
+        }
       + name                = "production-app"
       + number              = (known after apply)
       + project_id          = "my-gcp-project-prod-543224"
       + terraform_labels    = {
+          + "env"                        = "production"
           + "goog-terraform-provisioned" = "true"
         }
     }
@@ -672,7 +625,7 @@ Terraform will perform the following actions:
       + state              = (known after apply)
     }
 
-Plan: 35 to add, 0 to change, 0 to destroy.
+Plan: 33 to add, 0 to change, 0 to destroy.
 
 ─────────────────────────────────────────────────────────────────────────────
 

@@ -3,6 +3,7 @@ resource "google_project" "my_project" {
   project_id = var.project_id
   billing_account = data.google_billing_account.acct.id
   deletion_policy = var.project_deletion_policy
+  labels = {"env": "${var.project_env}"}
 }
 data "google_billing_account" "acct" {
   display_name = "My Billing Account"

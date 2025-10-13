@@ -3,6 +3,11 @@ variable "project_id" {
   type        = string
 }
 
+variable "project_env" {
+  description = "name of project's environment"
+  type = string
+}
+
 variable "region" {
   description = "region for the project"
   type        = string

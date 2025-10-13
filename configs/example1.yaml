@@ -5,6 +5,7 @@ modules:
     selected: true
     project_name: production-app
     project_id: my-gcp-project-prod-543224
+    project_env: production
     project_deletion_policy: DELETE
     enabled_apis:
       - compute.googleapis.com

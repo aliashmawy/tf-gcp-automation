@@ -2,6 +2,7 @@ allowed_ports_sql = ["5432", "443"]
 enabled_apis = ["compute.googleapis.com", "sqladmin.googleapis.com", "run.googleapis.com", "vpcaccess.googleapis.com", "secretmanager.googleapis.com", "cloudresourcemanager.googleapis.com", "servicenetworking.googleapis.com", "monitoring.googleapis.com", "logging.googleapis.com"]
 ip_cidr_range = "10.0.0.0/16"
 project_deletion_policy = "DELETE"
+project_env = "production"
 project_id = "my-gcp-project-prod-543224"
 project_name = "production-app"
 protocol_type = "tcp"
